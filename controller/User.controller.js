@@ -1,4 +1,5 @@
 const User = require('../models/User.model');
+const fs = require('fs').promises;
 
 module.exports = {
     get: async (req, res) => {
@@ -28,10 +29,15 @@ module.exports = {
     uploadAvatar: async (req, res) => {
         try {
             const updatedUser = 
-            await User.updateOne(
+            await User.findByIdAndUpdate(
             {_id: req.userId}, { 
-                $set: {avatar: req.filename}
-            }); 
+                $set: {
+                avatar: req.filename
+                }
+            });
+
+            await fs.unlink(`public/img/${updatedUser.avatar}`);
+
             res.json(updatedUser);
         } catch (error) {
             res.json(error);
@@ -66,7 +72,10 @@ module.exports = {
 
     destroy: async (req, res) => {
         try {
-            const removedUser = await User.deleteOne({_id: req.params.userId});
+            const removedUser = await User.findByIdAndDelete({_id: req.params.userId});
+
+            await fs.unlink(`public/img/${removedUser.avatar}`);
+
             res.json(removedUser);
         } catch (error) {
             res.send({message: error});
