@@ -1,14 +1,12 @@
-const jwt = require("jsonwebtoken");
-const User = require('../models/User.model');
-require('dotenv/config');
+import jwt from 'jsonwebtoken';
+import User from '../models/User.model.js';
+import 'dotenv/config';
 
-
-module.exports = {
+const AuthMiddleware = {
     verifyToken: (req, res, next) => {
         let token = req.headers["x-access-token"];
 
-        if (!token)
-            return res.status(403).send({ message: "No token provided!" });
+        if (!token) return res.status(403).send({ message: "No token provided!" });
 
         try {
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -35,3 +33,5 @@ module.exports = {
         res.status(403).send({message: "Unauthorized!"});
     }
 }
+
+export default AuthMiddleware;

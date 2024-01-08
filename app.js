@@ -1,15 +1,15 @@
-const express = require('express');
+import express from 'express';
 const app = express();
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 // const bodyParser = require('body-parser');
-const port = 3000;
+const port = 3001;
 
-require('dotenv/config');
+import 'dotenv/config';
 
 app.use(express.json());
 
 // Import Routes
-const apiRoute = require('./routes/api.route');
+import {router as apiRoute} from './routes/api.route.js';
 
 app.use('/api', apiRoute);
 

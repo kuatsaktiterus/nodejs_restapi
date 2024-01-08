@@ -1,10 +1,11 @@
-const express = require('express');
-const AuthController = require('../controller/Auth.controller');
-const router = express.Router();
-const PostController = require('../controller/Post.controller');
-const UserController = require('../controller/User.controller');
-const AuthMiddleware = require('../middleware/auth.middleware');
-const uploadAvatar = require('../services/uploadAvatar.service');
+import {Router} from 'express';
+import auth from '../controller/Auth.controller.js';
+import PostController from '../controller/Post.controller.js';
+import UserController from '../controller/User.controller.js';
+import AuthMiddleware from '../middleware/auth.middleware.js';
+import uploadAvatar from '../services/uploadAvatar.service.js';
+
+const router = Router();
 
 /**
  * 
@@ -46,8 +47,8 @@ router.patch('/user/:userId', UserController.update);
  * 
  * Auth Route
  */
-router.post('/signup/', AuthController.signUp);
+router.post('/signup/', auth.signUp);
 
-router.post('/login/', AuthController.login);
+router.post('/login/', auth.login);
 
-module.exports = router;
+export {router};

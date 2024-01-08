@@ -1,9 +1,10 @@
-const User = require('../models/User.model');
-const jwt = require('jsonwebtoken');
-require('dotenv/config');
+import User from '../models/User.model.js';
+import jsonwebtoken from 'jsonwebtoken';
+import 'dotenv/config';
+
 const JWT_SECRET = process.env.JWT_SECRET;
 
-module.exports = {
+const auth = {
     signUp: async (req, res) => {
         const user = new User({
             username: req.body.username,
@@ -24,7 +25,7 @@ module.exports = {
             const user = await User.findOne({username: req.body.username});
 
             if (user.validatePassword(req.body.password)) {
-                const token = jwt.sign(
+                const token = jsonwebtoken.sign(
                 {
                     id: user._id
                 }, JWT_SECRET);
@@ -38,3 +39,5 @@ module.exports = {
         }
     }
 }
+
+export default auth;

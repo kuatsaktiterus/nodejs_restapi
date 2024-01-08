@@ -1,7 +1,7 @@
-const Post = require('../models/Post.model');
-const User = require('../models/User.model');
+import Post from '../models/Post.model.js';
+import User from '../models/User.model.js';
 
-module.exports = {
+const PostController = {
     get: async (req, res) => {
         try {
             const posts = await Post.find();
@@ -61,7 +61,7 @@ module.exports = {
             );
 
             res.json(post);
-        } catch (error) {
+        } catch (error) {   
             res.json({message: error});
         }
     },
@@ -82,3 +82,5 @@ module.exports = {
         }
     }
 }
+
+export default PostController;

@@ -1,7 +1,7 @@
-const User = require('../models/User.model');
-const fs = require('fs').promises;
+import User from '../models/User.model.js';
+import fs from 'node:fs/promises';
 
-module.exports = {
+const UserController = {
     get: async (req, res) => {
         try {
             const users = await User.find();
@@ -82,3 +82,5 @@ module.exports = {
         }
     },
 };
+
+export default UserController;
